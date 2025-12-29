@@ -38,6 +38,13 @@
 \RequirePackage{setspace}
 \onehalfspacing % <--- Change line spacing HERE, default is onehalf is enough, can change to double etc.
 
+%%   Font
+%% ================
+%% Use a single, readable typeface (Times-like) for the body text.
+\RequirePackage{newtxtext}
+\RequirePackage{newtxmath}
+\renewcommand{\familydefault}{\rmdefault}
+
 \AtBeginDocument{
 \@ifpackageloaded{hyperref}{%
 \global\let\orig@footnotetext=\footnotetext
@@ -162,6 +169,9 @@
 \global\let\@frontmatter@active\@true
 \global\let\@frontmatter@exists\@true
 \pagenumbering{roman}
+\setcounter{page}{0}
+\setcounter{cmupage}{0}
+\setcounter{truepage}{0}
 \pagestyle{plain}
 }
 \newcommand{\backmatter}{%
@@ -180,10 +190,7 @@
 
 % FONTS
 \AtBeginDocument{
-\long\def\cmu@cmp@string@{\sfdefault} %Fonts should be sans serif in order to allow screen readers to function properly 
-\ifx\familydefault\cmu@cmp@string@\relax
-\usepackage{sfmath}
-\fi
+  \normalfont
 }
 
 %Page numbering
@@ -248,6 +255,7 @@
 \let\@department\@empty
 \let\@discipline\@empty
 \let\@college\@empty
+\let\@previousdegrees\@empty
 
 
 \let\@cmumemberone\@empty
@@ -265,6 +273,7 @@
 \newcommand{\discipline}[1]{\def\@discipline{#1}}
 \newcommand{\department}[1]{\def\@department{#1}}
 \newcommand{\college}[1]{\def\@college{#1}}
+\newcommand{\previousdegrees}[1]{\def\@previousdegrees{#1}}
 
 
 \newcommand{\committeememberone}[1]{\def\@cmumemberone{#1}}
@@ -284,85 +293,46 @@
 \global\let\@maketitle@exists\@true
 \sanitize{\@title}{title}
 \leavevmode
-\vspace*{-2 em} % Reduce white space at the top
+\vspace*{0.5em}
 
 \begin{center}
-% ===== TITLE =====
-{\Huge \bfseries \@title \par} % Bigger, bolder
-\vspace{1 em}
+  \begingroup
+    \setstretch{1}
+    {\bfseries \MakeTextUppercase{\@title}\par}
+  \endgroup
+  \vspace{3em}
 
-% ===== AUTHOR =====
-{\Large \@author \par}
-\vspace{4 em}
-
-% ===== DATE =====
-\ifx\@thesisdate\@empty\else
-    {\large \@thesisdate \par}
-    \vspace{4 em}
-\fi
-
-% ===== DEPARTMENT + UNIVERSITY =====
-\begingroup
-\setstretch{1.0}  % or 0.9 for even tighter
-\ifx\@college\@empty\else
-    {\large \@college \par}
-\fi
-\ifx\@department\@empty\else
-    {\large Department of \@department \par}
-\fi
-{\large Carnegie Mellon University \par}
-{\large Pittsburgh, Pennsylvania 15213 \par}
-\endgroup
-\vspace{4 em}  % also tighten gap after block (was 2.5em)
-
-
-% ===== COMMITTEE BLOCK =====
-\ifx\@cmumemberone\@empty\else
-    {\large
-    {\bfseries Thesis Committee: \par}
-    \vspace{0.25em}
-    \begingroup
-    \setstretch{1.0}  % << try 0.9 or 0.95 for tighter spacing if needed
-    \@cmumemberone \\
-    \ifx\@cmumembertwo\@empty\else
-        \@cmumembertwo \\
+  \begingroup
+    \setstretch{1}
+    Submitted in partial fulfillment of the requirements for\\
+    the degree of\\[0.75em]
+    {\@degree}\\[0.75em]
+    in\\[0.75em]
+    \ifx\@department\@empty
+      \@discipline
+    \else
+      Department of \@department
     \fi
-    \ifx\@cmumemberthree\@empty\else
-        \@cmumemberthree \\
-    \fi
-    \ifx\@cmumemberfour\@empty\else
-        \@cmumemberfour \\
-    \fi
-    \ifx\@cmumemberfive\@empty\else
-        \@cmumemberfive \\
-    \fi
-    \endgroup
-    }
-    \vspace{4 em}
-\fi
+    \par
+  \endgroup
 
-% ===== SUBMISSION NOTE =====
-\begingroup
-\setstretch{1}  % or 0.95 for slight tightening
-{\itshape
-Thesis submitted in partial fulfillment of the\\
-requirements for the degree of \@degree\ in \@discipline\par}
-\endgroup
+  \vspace{3em}
+  {\@author \par}
 
-\vfill
+  \ifx\@previousdegrees\@empty\else
+    \vspace{1em}
+    {\@previousdegrees \par}
+  \fi
 
-% ===== COPYRIGHT =====
+  \vfill
 
-% define function to extract the year from the thesis date that user input
-\def\extract@year ##1 ##2, ##3\@nil{##3}
-\edef\thesisyear{\expandafter\extract@year\@thesisdate\@nil}
-
-© \@author, \thesisyear
+  Carnegie Mellon University\\
+  Pittsburgh, PA\\[1em]
+  \@thesisdate
 \end{center}
 
 \thispagestyle{empty}
 \cmu@page@label{title}
-\global\let\cmu@customnumber@output\@true
 }
 
 
@@ -373,14 +343,12 @@ requirements for the degree of \@degree\ in \@discipline\par}
 \newcommand{\makecopyright}[1]{
 \vspace*{\fill}
 \begin{center}
-\textbf{{\textcopyright} Copyright by {\@author}, {#1}} \\
-All Rights Reserved OR provide Creative Commons License
-%Choose your copyright status
+{\textcopyright} #1 \@author\\
+All Rights Reserved
 \end{center}
 \vspace*{\fill}
 \thispagestyle{empty} % no page number for the copyright page
 \cmu@page@label{copyright} % use a special hyperref ``page seek'' for the copyright page
-\global\let\cmu@customnumber@output\@true % needs to be turned off after page is output
 }
 
 %% ><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
@@ -393,9 +361,6 @@ All Rights Reserved OR provide Creative Commons License
   
   \clearpage
 
-  \pagenumbering{roman}   % <-- Start roman page numbering here
-  \setcounter{page}{1}    % <-- Make dedication page start at ii
-  
   \thispagestyle{plain}
   \null % ensures we're in vertical mode
   \vfill
@@ -1106,10 +1071,10 @@ subrefformat=subsimple%
 %% Activate the "sort and compress" natbib option and choose the correct reference style
 \def\NAT@sort{\@ne}\def\NAT@cmprs{\@ne}
 \ifNAT@numbers
-\cmu@bibliographystyle@set{unsrtnat}
+\cmu@bibliographystyle@set{IEEEtranN}
 \global\let\cmu@disallow@bibtopic=\@true
 \else
-\cmu@bibliographystyle@set{authordate1}
+\cmu@bibliographystyle@set{IEEEtran}
 \fi
 %% Fix a bug in author-date references where titles appear like so:
 %% (Reference et al. , 2009)
@@ -1123,12 +1088,21 @@ subrefformat=subsimple%
 }
 \def\citename#1#2(@)(@)\@nil#3{\expandafter\repair@authordate@start\expandafter\NAT@apalk#1#2, \@nil{#3}\repair@authordate@done}
 }{
-\cmu@bibliographystyle@set{unsrt}% assume traditional unsorted style
+\cmu@bibliographystyle@set{IEEEtran}% assume IEEE style
 }
 }
 
 %% Force footnotes to always appear at the very bottom of the page
 \RequirePackage[hang,flushmargin,bottom]{footmisc}
+\renewcommand{\footnoterule}{%
+  \kern -3pt
+  \hrule width 1.5in
+  \kern 2.6pt
+}
+\renewcommand\@makefntext[1]{%
+  \noindent\hspace*{0.5in}\makebox[0pt][r]{\@makefnmark\ }#1%
+}
+\@addtoreset{footnote}{chapter}
 
 %% <<NOTE:>> No directions are given for inserting code in an Appendix, assuming that single spacing is desired.
 \AtBeginDocument{

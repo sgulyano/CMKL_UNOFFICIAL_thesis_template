@@ -166,8 +166,8 @@
 %  2) ``natbib'' screws up \thebibliography, so we most renew at the beginning of the document.
 \AtBeginDocument{
 	\makeatletter
-	\newcommand{\cmu@refname}{\raggedright \bfseries Bibliography\par}
-    \newcommand{\cmu@refname@formatted}{\par\raggedright\LARGE\bfseries Bibliography\par}
+	\newcommand{\cmu@refname}{\raggedright \bfseries References\par}
+    \newcommand{\cmu@refname@formatted}{\par\raggedright\LARGE\bfseries References\par}
 	\renewcommand{\refname}{\cmu@refname}
 	% Do not change the bibliography section if biblatex is used, otherwise we get two section titles
 	\@ifpackageloaded{biblatex}{}{
