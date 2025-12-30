@@ -298,4 +298,21 @@
     \pagenumbering{arabic}
 }
 
+% Customize Appendix Formatting
+\appto\appendix{
+    % Update chapter format for body: APPENDIX A: TITLE
+    \titleformat{\chapter}[block]
+        {\large\bfseries\centering}
+        {APPENDIX \thechapter:}
+        {1em}
+        {\MakeUppercase}
+
+    % Update TOC formatting for appendices
+    \addtocontents{toc}{%
+        \protect\renewcommand{\protect\cftchappresnum}{APPENDIX }%
+        \protect\renewcommand{\protect\cftchapaftersnum}{:}%
+        \protect\setlength{\protect\cftchapnumwidth}{8em}%
+    }
+}
+
 \endinput
