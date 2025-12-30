@@ -29,6 +29,12 @@
 % Double spacing for body text
 \doublespacing
 
+% Widow and orphan control
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+
 % Variables for Title Page
 \def\@degree{Doctor of Philosophy}
 \newcommand{\degree}[1]{\def\@degree{#1}}
@@ -106,6 +112,7 @@
 % Dedication
 \newenvironment{dedication}{
     \clearpage
+    \thispagestyle{empty}
     \vspace*{\fill}
     \begin{center}
     \doublespacing
@@ -121,6 +128,7 @@
     \phantomsection
     \addcontentsline{toc}{chapter}{\normalfont ACKNOWLEDGEMENTS}
     \chapter*{Acknowledgements}
+    \vspace{\baselineskip} % Leave two blank lines between title and text
     \doublespacing
 }{
     \clearpage
@@ -158,10 +166,18 @@
 % Center TOC/LOT/LOF headings
 \renewcommand{\cfttoctitlefont}{\hfil\bfseries\large\MakeUppercase}
 \renewcommand{\cftaftertoctitle}{\hfil}
-\renewcommand{\cftlottitlefont}{\hfill\bfseries\MakeUppercase}
+\renewcommand{\cftlottitlefont}{\hfill\bfseries\large\MakeUppercase}
 \renewcommand{\cftafterlottitle}{\hfill}
-\renewcommand{\cftloftitlefont}{\hfill\bfseries\MakeUppercase}
+\renewcommand{\cftloftitlefont}{\hfill\bfseries\large\MakeUppercase}
 \renewcommand{\cftafterloftitle}{\hfill}
+
+% Match TOC/LOT/LOF spacing to chapter spacing
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{40pt}
+\setlength{\cftbeforelottitleskip}{0pt}
+\setlength{\cftafterlottitleskip}{40pt}
+\setlength{\cftbeforeloftitleskip}{0pt}
+\setlength{\cftafterloftitleskip}{40pt}
 
 % Add "Figure" and "Table" prefixes with enumeration
 \newcounter{lofcount}
@@ -234,7 +250,7 @@
     {\thechapter.}
     {1em}
     {\MakeUppercase}
-\titlespacing*{\chapter}{0pt}{50pt}{20pt}
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
 
 \titleformat{\section}
     {\normalfont\bfseries}

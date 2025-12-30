@@ -1,0 +1,74 @@
+\chapter{Analysis}
+
+\section{Using Figures, Tables, Citations, and Cross-References}
+
+This section demonstrates how to include citations, figures, tables, cross-references, and footnotes in a thesis or dissertation prepared using \LaTeX.
+
+\subsection{Citations}
+
+This is the second citation \cite{bishop2006}.  
+This is the third citation \cite{goodfellow2016}.  
+This is the fourth citation \cite{han2021transformer}.
+
+\subsection{Figures}
+Figures are used to illustrate concepts, present visual results, or support explanations in the text. Each figure must include a descriptive caption and be referenced in the main text.
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/image-01-million_billion_trillion.png}
+    \caption{The trend of actual versus perceived size of a number \cite{einstein}. This caption is intentionally long to demonstrate proper formatting and correct appearance in the List of Figures.}
+    \label{fig:xkcd1}
+\end{figure}
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/image-02-phd092809s.png}
+    \caption{``Vacation Relaxation?'' by Jorge Cham, \texttt{www.phdcomics.com}. This example illustrates how to include external images and descriptive captions in a thesis or dissertation.}
+    \label{fig:phdcomics1}
+\end{figure}
+
+\subsection{Tables}
+
+Tables are used to present structured data in rows and columns. Each table must include a caption and should be referenced in the text.
+
+
+\begin{table}[tb]
+	\centering
+	\caption{Examples of character encoding in text and math modes}
+	\label{tab:encoding}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		 & Normal Text & Math Mode \\ \hline
+		Greater than & > & $>$ \\ \hline
+		Less than & < & $<$ \\ \hline
+		Tilde & \textasciitilde{} & $\sim$ \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+    \centering
+    \caption{An example of a large table that occupies more than half of a page. When no placement option is specified, \LaTeX{} may place the table on a separate page automatically.}
+    \label{tab:my_labelTable}
+\begin{tabular}{lcrcl}
+\hline
+Long Table & Big Table & 50\% of the page & Other & And another \\ \hline
+1          & 2         & 3                & 4          & 5           \\
+A          & B         & C                & D          & E           \\
+6          & 7         & 8                & 9          & 10          \\
+a          & b         & c                & d          & e           \\
+11         & 21        & 31               & 41         & 51          \\
+\textbf{A} & \textbf{B}& \textbf{C}       & \textbf{D} & \textbf{E}  \\
+61         & 71        & 81               & 91         & 101         \\
+\textbf{a} & \textbf{b}& \textbf{c}       & \textbf{d} & \textbf{e} \\
+111        & 211       & 311              & 411        & 511         \\
+\textit{A} & \textit{B}& \textit{C}       & \textit{D} & \textit{E}  \\
+611        & 711       & 811              & 911        & 1011        \\
+\textit{a} & \textit{b}& \textit{c}       & \textit{d} & \textit{e}  \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Footnote}
+
+This chapter demonstrates how to reference figures and tables within the text. For example, Figure~\ref{fig:xkcd1} and Figure~\ref{fig:phdcomics1} illustrate proper figure usage, while Table~\ref{tab:encoding} provides an example of table referencing.
+
+Footnotes may be used to provide additional clarification without interrupting the flow of the main text.\footnote{This is an example of a footnote. Footnotes should be used sparingly and placed at the bottom of the page.} This is the second footnote.\footnote{If footnotes are needed, they should be placed at the bottom of the page below a 1.5-inch underscore (starting at the left border). } This is the last footnote. \footnote{The first line of each footnote should be indented 0.5 inches and identified by a raised numeral corresponding to that used in the test. Footnotes should be numbered consecutively throughout each chapter. }
